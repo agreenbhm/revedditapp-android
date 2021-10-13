@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
             if ("text/plain".equals(type)) {
                 handleSendText(intent); // Handle text being sent
             }
+        } else {
+            Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context, "To use Reveddit share a Reddit URL with the app.", Toast.LENGTH_LONG);
+            toast.show();
         }
         finish();
     }
