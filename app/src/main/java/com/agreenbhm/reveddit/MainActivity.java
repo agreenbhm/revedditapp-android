@@ -40,16 +40,22 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (path.regionMatches(true, 0, "/r/", 0, 3)) {
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    String reveddit = "https://reveddit.com/v/" + path.substring(3);
+                    String reveddit = "https://www.reveddit.com/v/" + path.substring(3);
                     i.setData(Uri.parse(reveddit));
                     //Log.d("Reveddit", reveddit);
                     startActivity(i);
-                } else{
+                } else if (path.regionMatches(true, 0, "/user/", 0, 6)) {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    String reveddit = "https://www.reveddit.com/y/" + path.substring(6);
+                    i.setData(Uri.parse(reveddit));
+                    //Log.d("Reveddit", reveddit);
+                    startActivity(i);
+                } else {
                     Context context = getApplicationContext();
                     Toast toast = Toast.makeText(context, "Unsupported URL", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                //Log.d("Reveddit", path.substring(0, 3));
+                //Log.d("Reveddit", path);
                 //Log.d("Reveddit", sharedText);
             }catch (Exception e) {
                 Log.d("Reveddit", e.getMessage());
