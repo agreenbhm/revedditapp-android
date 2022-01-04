@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class UndditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
             if ("text/plain".equals(type)) {
                 handleSendText(intent); // Handle text being sent
             }
-        } else {
-            Context context = getApplicationContext();
-            Toast toast = Toast.makeText(context, "To use Reveddit share a Reddit URL with the app.", Toast.LENGTH_LONG);
-            toast.show();
         }
         finish();
     }
@@ -38,17 +34,11 @@ public class MainActivity extends AppCompatActivity {
             Uri uri = Uri.parse(sharedText);
             String path = uri.getPath();
             try {
-                if (path.regionMatches(true, 0, "/r/", 0, 3)) {
+                if (path.matches("/(?:r|user)/[^/?]+/comments/\\w.*")) {
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    String reveddit = "https://www.reveddit.com/v/" + path.substring(3);
-                    i.setData(Uri.parse(reveddit));
-                    //Log.d("Reveddit", reveddit);
-                    startActivity(i);
-                } else if (path.regionMatches(true, 0, "/user/", 0, 6)) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    String reveddit = "https://www.reveddit.com/y/" + path.substring(6);
-                    i.setData(Uri.parse(reveddit));
-                    //Log.d("Reveddit", reveddit);
+                    String unddit = "https://www.unddit.com" + path;
+                    i.setData(Uri.parse(unddit));
+                    //Log.d("Reveddit", unddit);
                     startActivity(i);
                 } else {
                     Context context = getApplicationContext();
@@ -57,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Log.d("Reveddit", path);
                 //Log.d("Reveddit", sharedText);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("Reveddit", e.getMessage());
             }
         }
